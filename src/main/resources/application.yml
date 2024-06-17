@@ -1,0 +1,55 @@
+server:
+  forward-headers-strategy: framework
+  port: ${SERVER_PORT:8080}
+  shutdown: graceful
+
+spring:
+  application.name: springboot-thymeleaf
+  config:
+    import: optional:file:.env[.properties]
+  datasource:
+    schema: myburguer
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
+    driverClassName: org.postgresql.Driver
+    maxActive: 10
+    maxIdle: 5
+    minIdle: 2
+    initialSize: 5
+    removeAbandoned: true
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+    properties:
+      hibernate:
+        default_schema: ${spring.datasource.schema}
+        jdbc.batch_size: 20
+        cache:
+          use_query_cache: false
+          use_second_level_cache: false
+          use_structured_entries: false
+          use_minimal_puts: false
+  jackson:
+    default-property-inclusion: non_null
+    deserialization:
+      fail_on_unknown_properties: false
+    serialization:
+      fail_on_empty_beans: false
+      write_dates_as_timestamps: false
+    property-naming-strategy: SNAKE_CASE
+
+logging:
+  level:
+    org:
+      springframework:
+        web: ${LOG_LEVEL:DEBUG}
+    io:
+      github:
+        soat7:
+          myburguercontrol: ${LOG_LEVEL:DEBUG}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+        table, th, td {
+          border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+<h1>Test Thymeleaf</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Column Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:if="${incomeColumnsNames.isEmpty()}">
+        <p class="font-italic" style="color: red">Não há Itens cadastrados!</p>
+    </th:block>
+    <tr th:each="column : ${incomeColumnsNames}">
+        <td th:text="${column}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
